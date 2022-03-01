@@ -1,3 +1,5 @@
+import re
+
 from pathlib import Path
 from typing import Any
 from typing import Dict
@@ -114,6 +116,9 @@ def get_server_for_notebook(notebook_str: str) -> Optional[str]:
          -> 0
 
         """
+        logger.info("looking at registered name name", registered_name)
+        vscode_suffix = '-jvsc-........-....-....-....-............\.ipynb$'
+        registered_name = re.sub(vscode_suffix, '.ipynb', registered_name )
         return len(get_matching_tail_tokens(notebook_path.parts, Path(registered_name).parts))
 
     score_by_name = {x: get_score_for_name(x) for x in _REGISTERED_SERVERS.keys()}

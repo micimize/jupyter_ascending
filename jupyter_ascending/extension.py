@@ -1,4 +1,5 @@
 import time
+import re
 
 from loguru import logger
 
@@ -25,7 +26,10 @@ def set_everything_up():
     notebook_name = get_name_from_python()
     logger.info("IPYTHON: Loading {notebook}", notebook=notebook_name)
 
-    if f".{SYNC_EXTENSION}.ipynb" not in notebook_name:
+    vscode_suffix = f".{SYNC_EXTENSION}-jvsc-........-....-....-....-............\.ipynb$"
+
+    logger.info("fsetup name", registered_name, re.search(vscode_suffix, notebook_name))
+    if f".{SYNC_EXTENSION}.ipynb" not in notebook_name and not re.search(vscode_suffix, notebook_name):
         logger.info("IPYTHON: Not loading {notebook} because name does not match", notebook=notebook_name)
         return
 
